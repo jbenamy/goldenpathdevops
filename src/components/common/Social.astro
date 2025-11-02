@@ -8,6 +8,7 @@ import {
   FaGithub,
   FaInstagram,
   FaLinkedin,
+  FaMastodon,
   FaPinterest,
   FaTiktok,
   FaGlobe,
@@ -109,6 +110,20 @@ const iconClass =
           >
             <span class="sr-only">LinkedIn</span>
             <FaLinkedin className="w-6 h-6" />
+          </a>
+        </li>
+      )}
+      {links.mastodon && (
+        <li class={liClass}>
+          <a
+            class={iconClass}
+            aria-label="Mastodon"
+            href={links.mastodon}
+            target="_blank"
+            rel="me noopener noreferrer"
+          >
+            <span class="sr-only">Mastodon</span>
+            <FaMastodon className="w-6 h-6" />
           </a>
         </li>
       )}

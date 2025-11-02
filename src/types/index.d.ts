@@ -31,6 +31,7 @@ export type SocialLinks = {
   github?: string;
   instagram?: string;
   linkedIn?: string;
+  mastodon?: string;
   pinterest?: string;
   tiktok?: string;
   website?: string;
