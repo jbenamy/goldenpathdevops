@@ -11,7 +11,7 @@ import remarkMath from "remark-math";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://goldenpathdevops.com",
+  site: "https://goldenpathdevops.io",
   base: "/",
   trailingSlash: "ignore",
   prefetch: {
