@@ -1,4 +1,4 @@
 ---
-title: Blog Posts
-description: The blog of Jane and John Doe
+title: Golden Path DevOps Blog
+description: DevOps insights, cloud infrastructure guides, and modern development practices
 ---
