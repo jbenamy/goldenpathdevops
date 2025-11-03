@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "@components/base/BaseLayout.astro";
 import BlogCard from "@components/blog/Card.astro";
-import Share from "@components/common/Share.astro";
 import { plainify } from "@lib/textConverter";
 import type { BlogEntry } from "@/types";
 import TableOfContents from "@components/common/TableOfContents.astro";
@@ -25,9 +24,37 @@ const actuallyHideToc = hideToc || globalHideToc || headings.filter((heading) =>
 const entryDescription =
   description ||
   (autodescription ? plainify(entry.body!.slice(0, descriptionLenth)) : null);
+
+const baseUrl = "https://goldenpathdevops.io";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": entryDescription,
+  "image": image?.src ? `${baseUrl}${image.src}` : undefined,
+  "datePublished": entry.data.date?.toISOString(),
+  "dateModified": entry.data.date?.toISOString(),
+  "author": {
+    "@type": "Person",
+    "name": entry.data.author || "Golden Path DevOps"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Golden Path DevOps",
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${baseUrl}/favicon/android-chrome-512x512.png`
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `${baseUrl}/blog/${entry.id}/`
+  }
+};
 ---
 
 <BaseLayout title={title} description={entryDescription} image={image?.src}>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   <section class="flex container p-4">
     <div class=`w-full ${actuallyHideToc ? "" : "md:col-9"}`>
       <article class="">
@@ -54,17 +81,6 @@ const entryDescription =
     </div>
   </section>
 
-  <section class=`container items-start justify-between mt-4`>
-    <hr />
-    <div class="flex items-center justify-center lg:justify-end mt-4">
-      <Share
-        title={title}
-        description={entryDescription}
-        folder={"blog"}
-        id={entry.id}
-      />
-    </div>
-  </section>
   <!-- Related posts -->
   {
     relatedEntries.length > 0 && (

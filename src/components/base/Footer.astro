@@ -1,5 +1,6 @@
 ---
 import Social from "@components/common/Social.astro";
+import { FaRss } from "react-icons/fa";
 ---
 
 <footer class="glass container lg:my-4 lg:rounded-lg intersect:animate-fadeUp opacity-0">
@@ -11,9 +12,22 @@ import Social from "@components/common/Social.astro";
       Made with ❤️ in Atlanta
     </div>
     <div class="text-center lg:col-4 lg:my-0 flex items-center justify-center lg:justify-end">
+      <ul class="py-2 flex items-center">
+        <li class="inline-block px-1">
+          <a
+            class="glass-t rounded text-txt-p dark:text-darkmode-txt-p flex h-9 w-9 items-center justify-center text-center"
+            aria-label="RSS Feed"
+            href="/rss.xml"
+          >
+            <span class="sr-only">RSS Feed</span>
+            <FaRss className="w-6 h-6" />
+          </a>
+        </li>
+      </ul>
       <Social
         links={{
           linkedIn: "https://www.linkedin.com/in/jbenamy/",
+          mastodon: "https://theatl.social/@dreamphysix",
         }}
       />
     </div>

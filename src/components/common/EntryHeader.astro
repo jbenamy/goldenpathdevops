@@ -77,77 +77,79 @@ tags?.sort((a: string, b: string) => a.localeCompare(b));
 
 <div class="mt-2">
   {
-    image && showImage && (
-      <div class="mb-8 glass rounded-lg intersect:animate-fadeDown opacity-0 intersect-no-queue">
-        <Image
-          class="w-full rounded-lg"
-          src={image}
-          alt={imageAlt || ""}
-          height={500}
-          width={1200}
-          loading="eager"
-        />
-      </div>
-    )
-  }
-  {
     showInfo && (
       <div class="glass mb-8 p-4 rounded-lg intersect:animate-fade opacity-0 intersect-no-queue">
-        <h1 set:html={markdownify(title)} class="mb-4" />
-        <ul>
+        <div class="flex flex-col md:flex-row gap-6 items-start">
+          <div class="flex-1">
+            <h1 set:html={markdownify(title)} class="mb-6" />
+            <div class="flex flex-wrap gap-4 text-sm text-txt-s dark:text-darkmode-txt-s">
           {author && showAuthor && (
-            <li class="mr-1 inline-block">
-              <FaRegUserCircle className={"-mt-1 inline-block"} />
-              {upperHumanize(author)}
-            </li>
+            <div class="flex items-center gap-1.5">
+              <FaRegUserCircle className="text-base" />
+              <span>{upperHumanize(author)}</span>
+            </div>
           )}
           {date && showDate && (
-            <li class="mr-1 inline-block">
-              <FaRegCalendarAlt className={"ml-2 -mt-1 inline-block"} />
-              {formatDate(date)}
-            </li>
+            <div class="flex items-center gap-1.5">
+              <FaRegCalendarAlt className="text-base" />
+              <span>{formatDate(date)}</span>
+            </div>
           )}
           {pubDate && showPubDate && (
-            <li class="mr-1 inline-block">
-              <FaRegCalendarAlt className={"ml-2 -mt-1 inline-block"} />
-              Published
-              {formatDate(pubDate)}
-            </li>
+            <div class="flex items-center gap-1.5">
+              <FaRegCalendarAlt className="text-base" />
+              <span>Published {formatDate(pubDate)}</span>
+            </div>
           )}
           {modDate && showModDate && (
-            <li class="mr-1 inline-block">
-              <FaRegCalendarAlt className={"ml-2 -mt-1 inline-block"} />
-              Updated
-              {formatDate(modDate)}
-            </li>
+            <div class="flex items-center gap-1.5">
+              <FaRegCalendarAlt className="text-base" />
+              <span>Updated {formatDate(modDate)}</span>
+            </div>
           )}
           {complexity && complexity > 0 && showReadingTime && (
-            <li class="mr-1 inline-block">
-              <FaRegClock className={"ml-2 -mt-1 inline-block"} />
-              {readingTime(entry.body!, complexity)}
-            </li>
+            <div class="flex items-center gap-1.5">
+              <FaRegClock className="text-base" />
+              <span>{readingTime(entry.body!, complexity)}</span>
+            </div>
           )}
           {categories && showCategories && (
-            <li class="mr-1 inline-block">
+            <div class="flex items-center gap-2 flex-wrap">
               {categories.map((category: string, index: number) => (
-                <a href={`/blog/categories/${slugify(category)}`}>
-                  <FaRegFolder className={"ml-2 -mt-1 inline-block"} />
-                  {upperHumanize(category)}
+                <a href={`/blog/categories/${slugify(category)}`} class="flex items-center gap-1.5 hover:text-txt-p dark:hover:text-darkmode-txt-p">
+                  <FaRegFolder className="text-base" />
+                  <span>{upperHumanize(category)}</span>
                 </a>
               ))}
-            </li>
+            </div>
           )}
           {tags && showTags && (
-            <li class="mr-1 inline-block">
+            <div class="flex items-center gap-2 flex-wrap">
               {tags.map((tag: string, index: number) => (
-                <a href={`/blog/tags/${slugify(tag)}`}>
-                  <FaHashtag className={"ml-2 -mt-1 inline-block"} />
-                  {lowerHumanize(tag)}
+                <a href={`/blog/tags/${slugify(tag)}`} class="flex items-center gap-1.5 hover:text-txt-p dark:hover:text-darkmode-txt-p">
+                  <FaHashtag className="text-base" />
+                  <span>{lowerHumanize(tag)}</span>
                 </a>
               ))}
-            </li>
+            </div>
           )}
-        </ul>
+            </div>
+          </div>
+          {
+            image && showImage && (
+              <div class="md:w-80 w-full shrink-0">
+                <Image
+                  class="w-full rounded-lg"
+                  src={image}
+                  alt={imageAlt || ""}
+                  height={400}
+                  width={800}
+                  loading="eager"
+                />
+              </div>
+            )
+          }
+        </div>
       </div>
     )
   }

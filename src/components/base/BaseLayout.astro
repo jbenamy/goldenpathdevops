@@ -7,6 +7,7 @@ import "@/styles/main.scss";
 import { ClientRouter } from "astro:transitions";
 import Background from "@/components/base/Background.astro";
 import { Tooltips } from "astro-tooltips";
+import ogImage from "@assets/og-image.png";
 
 // types for frontmatters
 export interface Props {
@@ -21,7 +22,7 @@ const { title, description, image, noindex, canonical } = Astro.props;
 
 const siteTitle = "Golden Path DevOps";
 const siteDescription = "Golden Path DevOps - DevOps insights and best practices";
-const siteImage = "@assets/og-image.png";
+const siteImage = ogImage.src;
 const siteAuthor = "Golden Path DevOps";
 const baseUrl = "https://goldenpathdevops.io";
 ---
@@ -49,6 +50,7 @@ const baseUrl = "https://goldenpathdevops.io";
     />
     
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Golden Path DevOps RSS Feed" href="/rss.xml" />
     <link rel="me" href="https://theatl.social/@dreamphysix" />
 
     <meta name="theme-name" content="pages" />

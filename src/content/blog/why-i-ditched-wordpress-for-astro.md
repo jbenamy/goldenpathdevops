@@ -5,6 +5,8 @@ date: 2025-10-17
 author: "Joey Benamy"
 tags: ["Astro", "WordPress", "Web Performance", "JAMstack", "Static Site Generators"]
 categories: ["DevOps", "Web Development"]
+image: "@assets/blog/wordpress-anchor-to-astro-rocket.png"
+imageAlt: "Visual comparison of WordPress anchor being replaced by Astro rocket, symbolizing the performance upgrade from WordPress to Astro"
 ---
 
 ## TL;DR
@@ -424,11 +426,3 @@ If you choose Astro, you're choosing:
 I'm not saying WordPress should die - it serves a purpose for non-technical users who need a GUI. But if you're comfortable with code and Git? If you value performance and security? If you practice DevOps principles?
 
 **Use Astro. It's not even close.**
-
----
-
-<div class="callout">
-
-**Want to connect?** Reach out on <a href="https://www.linkedin.com/in/jbenamy/" target="_blank" rel="noopener noreferrer">LinkedIn</a> - I'm always happy to discuss DevOps practices and modern web development.
-
-</div>

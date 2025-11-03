@@ -32,6 +32,9 @@ const {
       <div class="row px-0 mx-0 w-full">
         <!-- blog posts -->
         <div class="col-12 lg:col-8 lg:p-0">
+          <h1 class="sr-only">
+            {entryIndex.data.title}
+          </h1>
           {
             entries.map((entry) => (
               <div class="mb-4">

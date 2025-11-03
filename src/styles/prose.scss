@@ -12,8 +12,18 @@
   @apply prose-hr:border-border prose-hr:dark:border-darkmode-border prose-hr:my-4;
   @apply prose-strong:text-txt-p prose-strong:dark:text-darkmode-txt-s;
   @apply prose-pre:rounded-lg prose-pre:bg-bg-t prose-pre:dark:bg-darkmode-bg-t;
-  // Code
-  @apply prose-code:px-1 prose-code:text-txt-p prose-code:dark:text-darkmode-txt-p;
+  // Code blocks (pre > code should not have inline styling)
+  pre code {
+    @apply bg-transparent p-0 text-inherit rounded-none text-base;
+  }
+  // Inline code only (not inside pre blocks)
+  :not(pre) > code {
+    @apply px-1.5 py-0.5 rounded text-txt-p dark:text-darkmode-txt-p bg-bg-t dark:bg-darkmode-bg-t font-mono text-sm;
+  }
+  :not(pre) > code::before,
+  :not(pre) > code::after {
+    content: '';
+  }
   // Blockquote
   @apply prose-blockquote:rounded-lg prose-blockquote:border prose-blockquote:border-l-8 prose-blockquote:px-4 prose-blockquote:py-0 prose-blockquote:font-secondary prose-blockquote:text-2xl prose-blockquote:not-italic;
   @apply prose-blockquote:glass-t-borderless prose-blockquote:border-border prose-blockquote:dark:border-darkmode-border prose-blockquote:text-txt-s prose-blockquote:dark:text-darkmode-txt-s;

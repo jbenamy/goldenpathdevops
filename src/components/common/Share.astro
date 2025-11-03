@@ -1,10 +1,10 @@
 ---
 import {
-  IoMail,
   IoLogoFacebook,
-  IoLogoPinterest,
-  IoLogoTwitter,
+  IoLogoLinkedin,
+  IoLogoMastodon,
 } from "react-icons/io5";
+import { FaBluesky, FaXTwitter } from "react-icons/fa6";
 
 interface Props {
   title?: string;
@@ -15,25 +15,13 @@ interface Props {
 
 const { title, description, folder, id }: Props = Astro.props;
 
-const baseURL = "https://janedoe.com";
+const baseURL = "https://goldenpathdevops.io";
 
 const iconClass =
   "glass-t rounded text-txt-p dark:text-darkmode-txt-p flex h-9 w-9 items-center justify-center text-center intersect:animate-fadeUp opacity-0 hover:bg-opacity-20";
 ---
 
 <ul class="">
-  <li class="inline-block px-1">
-    <a
-      class={iconClass}
-      href=`mailto:?subject=${title}&body=Check this out: ${baseURL}/${folder}/${id}%0D%0A%0D%0A${description}%0D%0A%0D%0A`
-      title="Share by Email"
-      aria-label="share by email"
-      target="_blank"
-      rel="noreferrer noopener"
-    >
-      <IoMail className="h-6 w-6" />
-    </a>
-  </li>
   <li class="inline-block px-1">
     <a
       class={iconClass}
@@ -48,23 +36,45 @@ const iconClass =
   <li class="inline-block px-1">
     <a
       class={iconClass}
-      aria-label="twitter share button"
-      href={`https://twitter.com/intent/tweet/?text=${title}&amp;url=${baseURL}/${folder}/${id}`}
+      aria-label="x share button"
+      href={`https://x.com/intent/tweet?text=${encodeURIComponent(title || '')}&url=${encodeURIComponent(`${baseURL}/${folder}/${id}`)}`}
       target="_blank"
       rel="noreferrer noopener"
     >
-      <IoLogoTwitter className="h-6 w-6" />
+      <FaXTwitter className="h-6 w-6" />
     </a>
   </li>
   <li class="inline-block px-1">
     <a
       class={iconClass}
-      aria-label="pinterest share button"
-      href={`https://pinterest.com/pin/create/button/?url=${baseURL}/${folder}/${id}&media=&description=${description}`}
+      aria-label="linkedin share button"
+      href={`https://www.linkedin.com/sharing/share-offsite/?url=${baseURL}/${folder}/${id}`}
       target="_blank"
       rel="noreferrer noopener"
     >
-      <IoLogoPinterest className="h-6 w-6" />
+      <IoLogoLinkedin className="h-6 w-6" />
+    </a>
+  </li>
+  <li class="inline-block px-1">
+    <a
+      class={iconClass}
+      aria-label="mastodon share button"
+      href={`https://mastodon.social/share?text=${encodeURIComponent(`${title} ${baseURL}/${folder}/${id}`)}`}
+      target="_blank"
+      rel="noreferrer noopener"
+    >
+      <IoLogoMastodon className="h-6 w-6" />
+    </a>
+  </li>
+  <li class="inline-block px-1">
+    <a
+      class={iconClass}
+      aria-label="bluesky share button"
+      href={`https://bsky.app/intent/compose?text=${encodeURIComponent(`${title} ${baseURL}/${folder}/${id}`)}`}
+      target="_blank"
+      rel="noreferrer noopener"
+    >
+      <FaBluesky className="h-6 w-6" />
     </a>
   </li>
 </ul>

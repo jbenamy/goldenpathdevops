@@ -27,7 +27,9 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [remarkToc, [remarkCollapse, {
       test: "Table of contents"
-    }], remarkMath],
+    }], [remarkMath, {
+      singleDollarTextMath: false
+    }]],
     rehypePlugins: [[rehypeKatex, {}]],
     shikiConfig: {
       themes: { // https://shiki.style/themes
