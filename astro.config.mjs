@@ -17,6 +17,10 @@ export default defineConfig({
   prefetch: {
     prefetchAll: true
   },
+  image: {
+    formats: ["webp", "avif"],
+    quality: 80,
+  },
   integrations: [react(), sitemap(), tailwind({
     config: {
       applyBaseStyles: false
@@ -35,8 +39,11 @@ export default defineConfig({
       themes: { // https://shiki.style/themes
         light: "light-plus",
         dark: "dark-plus",
-      } 
+      }
     },
     extendDefaultPlugins: true
+  },
+  build: {
+    inlineStylesheets: "auto",
   },
 });

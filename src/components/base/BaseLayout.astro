@@ -16,9 +16,10 @@ export interface Props {
   image?: string;
   noindex?: boolean;
   canonical?: string;
+  hasMath?: boolean;
 }
 
-const { title, description, image, noindex, canonical } = Astro.props;
+const { title, description, image, noindex, canonical, hasMath = false } = Astro.props;
 
 const siteTitle = "Golden Path DevOps";
 const siteDescription = "Golden Path DevOps - DevOps insights and best practices";
@@ -52,6 +53,14 @@ const baseUrl = "https://goldenpathdevops.io";
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title="Golden Path DevOps RSS Feed" href="/rss.xml" />
     <link rel="me" href="https://theatl.social/@dreamphysix" />
+
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="/fonts/inter/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-display/InterDisplay-Regular.woff2" as="font" type="font/woff2" crossorigin />
 
     <meta name="theme-name" content="pages" />
     <meta name="msapplication-TileColor" content="#000000" />
@@ -111,24 +120,28 @@ const baseUrl = "https://goldenpathdevops.io";
     />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Katex -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
-      integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
-      crossorigin="anonymous"
-    />
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
-      integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
-      crossorigin="anonymous"></script>
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
-      integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh"
-      crossorigin="anonymous"
-      onload="renderMathInElement(document.body);"></script>
+    <!-- Katex - only load when needed -->
+    {hasMath && (
+      <>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+          integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+          crossorigin="anonymous"
+        />
+        <script
+          defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+          integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+          crossorigin="anonymous"></script>
+        <script
+          defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
+          integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh"
+          crossorigin="anonymous"
+          onload="renderMathInElement(document.body);"></script>
+      </>
+    )}
       
     <!-- https://docs.astro.build/en/guides/view-transitions -->
     <ClientRouter fallback="swap" />
