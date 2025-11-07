@@ -9,16 +9,17 @@ Astrogon is a multipurpose static website template built with Astro JS, Tailwind
 ## Development Commands
 
 ### Setup
-- Install dependencies: `npm install`
+- Install dependencies: `pnpm install`
 - Node version: Use Node 22 (`nvm use 22` or `nvm install 22`)
+- Package manager: This project uses pnpm (specified in `package.json`)
 
 ### Development
-- Start dev server: `npm run dev` (site runs at `http://localhost:4321`)
-- Build for production: `npm run build`
-- Format code: `npm run format`
+- Start dev server: `pnpm dev` (site runs at `http://localhost:4321`)
+- Build for production: `pnpm build`
+- Format code: `pnpm format`
 
 ### Cloudflare Deployment (Alternative)
-- If deploying to Cloudflare Workers: `npx astro build && npx wrangler dev`
+- If deploying to Cloudflare Workers: `pnpm build && pnpm wrangler dev`
 - Note: Starting with Astro 5.8, Node 18 is unsupported. Wrangler is needed for new Cloudflare Workers.
 
 ## Architecture Overview
@@ -165,6 +166,7 @@ Key utility functions in [src/lib/](src/lib/):
 
 ## Deployment
 
+- **Netlify**: Configured via `netlify.toml`. Automatically detected by Netlify with pnpm support. Uses `pnpm build` command.
 - **GitHub Pages**: Follow Astro's GitHub Pages deployment guide
 - **Cloudflare Pages**: Recommended for advanced features, follow Astro's Cloudflare deployment guide
 - Post-build: `pagefind` automatically indexes content for search functionality

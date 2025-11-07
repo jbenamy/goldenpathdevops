@@ -4,7 +4,7 @@
   "description": "Template.",
   "author": "Jane Doe",
   "license": "MIT",
-  "packageManager": "npm@10.8.2",
+  "packageManager": "pnpm@9.0.0",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
