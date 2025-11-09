@@ -104,6 +104,9 @@ importers:
       tailwind-merge:
         specifier: ^2.5.2
         version: 2.6.0
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
     devDependencies:
       '@tailwindcss/forms':
         specifier: ^0.5.4

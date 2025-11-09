@@ -8,6 +8,7 @@ import remarkCollapse from "remark-collapse";
 import remarkToc from "remark-toc";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
+import rehypeExternalLinks from "./src/lib/rehype-external-links.mjs";
 
 // https://astro.build/config
 export default defineConfig({
@@ -34,7 +35,7 @@ export default defineConfig({
     }], [remarkMath, {
       singleDollarTextMath: false
     }]],
-    rehypePlugins: [[rehypeKatex, {}]],
+    rehypePlugins: [[rehypeKatex, {}], rehypeExternalLinks],
     shikiConfig: {
       themes: { // https://shiki.style/themes
         light: "light-plus",
