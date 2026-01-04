@@ -4,6 +4,7 @@ description: "Why the resourcefulness, automation, and scrappy engineering you l
 date: 2026-01-03
 author: "Joey Benamy"
 image: "@assets/blog/homelab-vs-startup.png"
+imageAlt: "A split image showing a homelab setup on one side and a startup's cloud infrastructure on the other."
 tags: ["DevOps", "Homelab", "Startups", "Cloud Infrastructure", "Career"]
 categories: ["DevOps", "Site Reliability Engineering"]
 draft: false
