@@ -3,6 +3,7 @@ title: "DevOps for Startups is Just a High-Stakes Homelab"
 description: "Why the resourcefulness, automation, and scrappy engineering you learn from a homelab are the perfect training ground for a tech startup's DevOps challenges."
 date: 2026-01-03
 author: "Joey Benamy"
+image: "@assets/blog/homelab-vs-startup.png"
 tags: ["DevOps", "Homelab", "Startups", "Cloud Infrastructure", "Career"]
 categories: ["DevOps", "Site Reliability Engineering"]
 draft: false
