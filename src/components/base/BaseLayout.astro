@@ -14,6 +14,9 @@ export interface Props {
   title?: string;
   description?: string | null;
   image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  type?: string;
   noindex?: boolean;
   canonical?: string;
   hasMath?: boolean;
@@ -23,6 +26,9 @@ const {
   title,
   description,
   image,
+  imageWidth,
+  imageHeight,
+  type = "website",
   noindex,
   canonical,
   hasMath = false,
@@ -34,6 +40,12 @@ const siteDescription =
 const siteImage = ogImage.src;
 const siteAuthor = "Golden Path DevOps";
 const baseUrl = "https://www.goldenpathdevops.io";
+
+const resolvedImage = image
+  ? image.startsWith("http")
+    ? image
+    : `${baseUrl}${image}`
+  : `${baseUrl}${siteImage}`;
 ---
 
 <!DOCTYPE html>
@@ -124,15 +136,17 @@ const baseUrl = "https://www.goldenpathdevops.io";
       property="og:description"
       content={plainify(description ? description : siteDescription)}
     />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta
       property="og:url"
       content={`${baseUrl}/${Astro.url.pathname.replace("/", "")}`}
     />
     <meta
       property="og:image"
-      content={`${baseUrl}${image ? image : siteImage}`}
+      content={resolvedImage}
     />
+    {imageWidth && <meta property="og:image:width" content={imageWidth.toString()} />}
+    {imageHeight && <meta property="og:image:height" content={imageHeight.toString()} />}
 
     <meta name="twitter:title" content={plainify(title ? title : siteTitle)} />
     <meta
@@ -141,7 +155,7 @@ const baseUrl = "https://www.goldenpathdevops.io";
     />
     <meta
       name="twitter:image"
-      content={`${baseUrl}${image ? image : siteImage}`}
+      content={resolvedImage}
     />
     <meta name="twitter:card" content="summary_large_image" />
 

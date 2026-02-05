@@ -26,12 +26,19 @@ const entryDescription =
   (autodescription ? plainify(entry.body!.slice(0, descriptionLenth)) : null);
 
 const baseUrl = "https://www.goldenpathdevops.io";
+
+const resolvedImage = image?.src
+  ? image.src.startsWith("http")
+    ? image.src
+    : `${baseUrl}${image.src}`
+  : undefined;
+
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": title,
   "description": entryDescription,
-  "image": image?.src ? `${baseUrl}${image.src}` : undefined,
+  "image": resolvedImage,
   "datePublished": entry.data.date?.toISOString(),
   "dateModified": entry.data.date?.toISOString(),
   "author": {
@@ -53,7 +60,14 @@ const structuredData = {
 };
 ---
 
-<BaseLayout title={title} description={entryDescription} image={image?.src}>
+<BaseLayout
+  title={title}
+  description={entryDescription}
+  image={image?.src}
+  imageWidth={image?.width}
+  imageHeight={image?.height}
+  type="article"
+>
   <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   <section class="flex container p-4">
     <div class=`w-full ${actuallyHideToc ? "" : "md:col-9"}`>
