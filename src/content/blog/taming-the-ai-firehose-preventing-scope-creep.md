@@ -5,7 +5,7 @@ date: 2026-02-04
 author: "Joey Benamy"
 tags: ["AI", "DevOps", "Software Engineering", "Productivity", "Scope Creep"]
 categories: ["DevOps", "Software Engineering"]
-image: "@assets/blog/ai-scope-creep.svg"
+image: "@assets/blog/ai-scope-creep.png"
 imageAlt: "A digital illustration showing a cyan-glowing robot holding a large firehose, blasting a stream of pink energy and code symbols at an overwhelmed computer monitor."
 ---
 
