@@ -146,7 +146,7 @@ body {
 }
 .breaker:hover { background: #262b33; transform: translateX(1px); }
 .breaker.selected { box-shadow: 0 0 0 2px var(--accent); background: #283040; }
-.column.right .breaker { flex-direction: row-reverse; text-align: right; border-left-width:1px; border-right-width: 4px; }
+.column.right .breaker { flex-direction: row-reverse; text-align: right; border-left-width:1px; border-left-color: #3a3f47; border-right-width: 4px; }
 
 .breaker.double { min-height: 76px; }
 
