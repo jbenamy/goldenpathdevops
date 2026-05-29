@@ -6,8 +6,10 @@ let selectedKey = null; // "PanelId:side-slot"
 
 const TYPE_NAMES = {
   standard: "Standard breaker",
-  gfci: "GFCI protected",
-  afci: "AFCI protected",
+  gfci: "GFCI",
+  afci: "AFCI",
+  cafci: "CAFCI + AFCI",
+  df: "Dual function (AFCI + GFCI)",
   main: "Main breaker",
   spare: "Spare / unused",
   open: "Open position",
@@ -98,8 +100,10 @@ function makeBreaker(panelId, c) {
   b.className = `breaker t-${c.type}` + (c.poles === 2 ? " double" : "");
   if (circuitKey(panelId, c) === selectedKey) b.classList.add("selected");
   const ampBadge = c.amps != null ? `<span class="amp-badge">${c.amps}A</span>` : "";
+  const slotMarkup =
+    c.poles === 2 ? `<span>${c.slot}</span><span>${c.slot + 2}</span>` : `${c.slot}`;
   b.innerHTML = `
-    <span class="slot-num">${c.slot}</span>
+    <span class="slot-num">${slotMarkup}</span>
     ${ampBadge}
     <span class="breaker-label">${c.label}</span>`;
   b.addEventListener("click", () => selectCircuit(panelId, c));
@@ -125,6 +129,7 @@ function renderDetail(panelId, c) {
   }
 
   const poleText = c.poles === 2 ? "2-pole (240V)" : "1-pole (120V)";
+  const slotText = c.poles === 2 ? `slots ${c.slot}/${c.slot + 2}` : `slot ${c.slot}`;
   detailEl.innerHTML = `
     <span class="type-pill dt-${c.type}">${TYPE_NAMES[c.type] || c.type}</span>
     <h2>${c.label}</h2>
@@ -132,8 +137,7 @@ function renderDetail(panelId, c) {
     <dl>
       <dt>Rating</dt><dd>${c.amps} A</dd>
       <dt>Poles</dt><dd>${poleText}</dd>
-      <dt>Position</dt><dd>${c.side === "main" ? "Service main" : c.side + " column, slot " + c.slot}</dd>
-      <dt>Conductor</dt><dd>${c.wire || "—"}</dd>
+      <dt>Position</dt><dd>${c.side === "main" ? "Service main" : c.side + " column, " + slotText}</dd>
     </dl>
     <div class="notes">${c.notes ? c.notes : "No additional notes."}</div>`;
 }

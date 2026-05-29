@@ -9,8 +9,10 @@
   --muted: #9aa0a8;
   --accent: #4ea1ff;
   --t-standard: #6b7280;
-  --t-gfci: #2563eb;
-  --t-afci: #d97706;
+  --t-gfci: #eab308;
+  --t-afci: #22c55e;
+  --t-cafci: #f3f4f6;
+  --t-df: #a855f7;
   --t-main: #dc2626;
   --t-spare: #3f4651;
   --t-tie: #7c3aed;
@@ -154,6 +156,10 @@ body {
 .column.right .breaker.t-gfci { border-right-color: var(--t-gfci); }
 .breaker.t-afci { border-left-color: var(--t-afci); }
 .column.right .breaker.t-afci { border-right-color: var(--t-afci); }
+.breaker.t-cafci { border-left-color: var(--t-cafci); }
+.column.right .breaker.t-cafci { border-right-color: var(--t-cafci); }
+.breaker.t-df { border-left-color: var(--t-df); }
+.column.right .breaker.t-df { border-right-color: var(--t-df); }
 .breaker.t-spare { border-left-color: var(--t-spare); opacity: 0.6; }
 .column.right .breaker.t-spare { border-right-color: var(--t-spare); }
 
@@ -195,6 +201,13 @@ body {
   font-variant-numeric: tabular-nums;
   min-width: 16px;
 }
+/* 2-pole: show both slot numbers stacked at the top and bottom, as if two slots */
+.breaker.double .slot-num {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
 .legend-bar {
   display: flex;
@@ -210,6 +223,8 @@ body {
 .swatch.t-standard { background: var(--t-standard); }
 .swatch.t-gfci { background: var(--t-gfci); }
 .swatch.t-afci { background: var(--t-afci); }
+.swatch.t-cafci { background: var(--t-cafci); }
+.swatch.t-df { background: var(--t-df); }
 .swatch.t-main { background: var(--t-main); }
 .swatch.t-spare { background: var(--t-spare); }
 .swatch.t-open { background: #16191e; border: 1px dashed #3a3f47; }
@@ -238,8 +253,10 @@ body {
   margin-bottom: 14px;
 }
 .dt-standard { background: var(--t-standard); }
-.dt-gfci { background: var(--t-gfci); }
+.dt-gfci { background: var(--t-gfci); color: #111; }
 .dt-afci { background: var(--t-afci); }
+.dt-cafci { background: var(--t-cafci); color: #111; }
+.dt-df { background: var(--t-df); }
 .dt-main { background: var(--t-main); }
 .dt-spare { background: var(--t-spare); }
 .dt-open { background: #4b5563; }
