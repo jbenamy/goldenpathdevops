@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Electrical Panels — Interactive Diagram</title>
+  <link rel="stylesheet" href="/demo/electrical/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Electrical Panels</h1>
+    <p class="subtitle">Both panels as mounted on the wall — click any breaker for circuit details</p>
+  </header>
+
+  <main class="layout">
+    <section class="panels-wall" id="panelsWall"></section>
+
+    <aside class="detail" id="detail">
+      <div class="detail-empty">
+        <p>Select a breaker to view its circuit information.</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="legend-bar">
+    <span class="legend-item"><i class="swatch t-standard"></i>Standard</span>
+    <span class="legend-item"><i class="swatch t-gfci"></i>GFCI</span>
+    <span class="legend-item"><i class="swatch t-afci"></i>AFCI</span>
+    <span class="legend-item"><i class="swatch t-main"></i>Main</span>
+    <span class="legend-item"><i class="swatch t-spare"></i>Spare</span>
+    <span class="legend-item"><i class="swatch t-open"></i>Open slot</span>
+  </footer>
+
+  <script src="/demo/electrical/data.js"></script>
+  <script src="/demo/electrical/app.js"></script>
+</body>
+</html>
