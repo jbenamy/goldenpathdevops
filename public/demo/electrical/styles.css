@@ -48,13 +48,15 @@ body {
 .panels-wall {
   display: flex;
   gap: 28px;
-  align-items: start;
+  align-items: stretch;
   flex-wrap: wrap;
 }
 .panel-unit {
-  flex: 1 1 480px;
+  flex: 1 1 0;
   min-width: 360px;
   max-width: 700px;
+  display: flex;
+  flex-direction: column;
 }
 
 .panel-meta {
@@ -72,6 +74,9 @@ body {
   border-radius: 10px;
   padding: 18px 16px 22px;
   box-shadow: inset 0 0 30px rgba(0,0,0,0.5), 0 8px 24px rgba(0,0,0,0.4);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .main-breaker {
@@ -100,6 +105,73 @@ body {
   border-color: #b91c1c;
 }
 
+/* Service feed rails (L1 / L2) */
+.panel-feed-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 14px;
+  margin-bottom: 0;
+}
+
+.panel-feed {
+  background: #0c1f0f;
+  border: 1px solid rgba(22, 163, 74, 0.5);
+  border-radius: 6px;
+  padding: 7px 10px;
+  box-shadow: 0 0 8px rgba(22, 163, 74, 0.1);
+}
+
+.panel-feed-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.panel-feed-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.05em;
+}
+
+.panel-feed-voltage {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #22c55e;
+  font-variant-numeric: tabular-nums;
+}
+
+.panel-feed-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel-feed-monitored {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.68rem;
+  color: #22c55e;
+  font-weight: 500;
+}
+
+.panel-feed-arrow {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.65rem;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.panel-feed-connector {
+  height: 10px;
+  background: linear-gradient(to bottom, #0c1f0f, var(--bus));
+  margin: 0 0;
+}
+
 .bus {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -108,6 +180,8 @@ body {
   padding: 12px;
   border-radius: 6px;
   position: relative;
+  flex: 1;
+  align-content: start;
 }
 /* center mounting channel — a subtle recessed groove the breakers clip toward */
 .bus::before {
@@ -164,6 +238,18 @@ body {
 .column.right .breaker.t-spare { border-right-color: var(--t-spare); }
 
 /* open (unused) bus positions */
+/* Emporia-monitored circuits */
+.breaker.monitored {
+  background: #0c1f0f;
+  box-shadow: 0 0 0 1px rgba(22, 163, 74, 0.5), 0 0 8px rgba(22, 163, 74, 0.12);
+}
+.breaker.monitored:hover {
+  background: #122518;
+}
+.breaker.monitored.selected {
+  box-shadow: 0 0 0 2px var(--accent), 0 0 8px rgba(22, 163, 74, 0.12);
+}
+
 .breaker.t-open {
   background: #16191e;
   border: 1px dashed #3a3f47;
@@ -207,6 +293,107 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+/* Emporia Vue Gen 3 device box */
+.emporia-connector {
+  width: 3px;
+  height: 18px;
+  background: linear-gradient(to bottom, #3a3f47, #16a34a66);
+  margin: 0 auto;
+}
+
+.emporia-device {
+  background: linear-gradient(160deg, #0d2618, #071a10);
+  border: 1px solid #16a34a;
+  border-radius: 8px;
+  padding: 12px 16px;
+  box-shadow: 0 0 12px rgba(22, 163, 74, 0.15), 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.emporia-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.emporia-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.emporia-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  color: #22c55e;
+  font-weight: 500;
+}
+.emporia-status svg {
+  flex: none;
+}
+
+.emporia-info {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.emporia-feeds {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #16a34a33;
+}
+
+.emporia-feed {
+  flex: 1;
+  background: #0c1f0f;
+  border: 1px solid rgba(22, 163, 74, 0.45);
+  border-radius: 6px;
+  padding: 7px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 0 6px rgba(22, 163, 74, 0.08);
+}
+
+.emporia-feed-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.04em;
+}
+
+.emporia-feed-status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  color: #22c55e;
+  font-weight: 500;
+}
+
+.emporia-channels {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #16a34a33;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.emporia-channel-count {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #22c55e;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
 .legend-bar {

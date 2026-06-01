@@ -14,7 +14,7 @@ const TYPE_NAMES = {
 };
 
 // Render panels in physical wall order (left -> right)
-const PANEL_ORDER = ["A", "B"];
+const PANEL_ORDER = ["B", "A"];
 
 function circuitKey(panelId, c) {
   return `${panelId}:${c.side}-${c.slot}`;
@@ -75,6 +75,28 @@ function makePanel(id, panel) {
     panelBox.appendChild(m);
   }
 
+  const feedRow = document.createElement("div");
+  feedRow.className = "panel-feed-row";
+  const waveIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`;
+  const downArrow = `<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>`;
+  ["Line 1", "Line 2"].forEach((line) => {
+    const f = document.createElement("div");
+    f.className = "panel-feed";
+    f.innerHTML = `
+      <div class="panel-feed-top">
+        <span class="panel-feed-name">${line}</span>
+        <span class="panel-feed-voltage">120V</span>
+      </div>
+      <div class="panel-feed-bottom">
+        <span class="panel-feed-monitored">${waveIcon} Monitored</span>
+        <span class="panel-feed-arrow">${downArrow} to circuits</span>
+      </div>`;
+    feedRow.appendChild(f);
+  });
+
+  const feedConnector = document.createElement("div");
+  feedConnector.className = "panel-feed-connector";
+
   const bus = document.createElement("div");
   bus.className = "bus";
 
@@ -88,14 +110,51 @@ function makePanel(id, panel) {
 
   bus.appendChild(colL);
   bus.appendChild(colR);
+  panelBox.appendChild(feedRow);
+  panelBox.appendChild(feedConnector);
   panelBox.appendChild(bus);
   wrap.appendChild(panelBox);
+  wrap.appendChild(makeEmporia(panel));
+  return wrap;
+}
+
+function makeEmporia(panel) {
+  const circuit = panel.circuits.find((c) => c.label.startsWith("Emporia"));
+
+  const connector = document.createElement("div");
+  connector.className = "emporia-connector";
+
+  const device = document.createElement("div");
+  device.className = "emporia-device";
+  device.innerHTML = `
+    <div class="emporia-header">
+      <span class="emporia-name">Emporia Vue 3</span>
+      <span class="emporia-status">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+        Monitoring
+      </span>
+    </div>
+    <div class="emporia-info">
+      Whole-home energy monitor${circuit ? ` · ${circuit.amps}A 240V · slots ${circuit.slot}/${circuit.slot + 2}` : ""}
+    </div>
+    <div class="emporia-channels">
+      <span class="emporia-channel-count">${panel.monitored ? panel.monitored.length : 0}</span>
+      channels monitored
+    </div>`;
+
+  const wrap = document.createElement("div");
+  wrap.className = "emporia-unit";
+  wrap.appendChild(connector);
+  wrap.appendChild(device);
   return wrap;
 }
 
 function makeBreaker(panelId, c) {
+  const monitored = new Set(PANELS[panelId].monitored || []);
   const b = document.createElement("button");
-  b.className = `breaker t-${c.type}` + (c.poles === 2 ? " double" : "");
+  b.className = `breaker t-${c.type}` + (c.poles === 2 ? " double" : "") + (monitored.has(c.slot) ? " monitored" : "");
   b.dataset.key = circuitKey(panelId, c);
   if (circuitKey(panelId, c) === selectedKey) b.classList.add("selected");
   const ampBadge = c.amps != null ? `<span class="amp-badge">${c.amps}A</span>` : "";

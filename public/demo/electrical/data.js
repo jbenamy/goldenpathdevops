@@ -15,7 +15,8 @@ const PANELS = {
     make: "Square D QO",
     mainAmps: 150,
     voltage: "120/240V split-phase",
-    location: "Left enclosure",
+    location: "Right enclosure",
+    monitored: [1, 2, 3, 4, 5, 9, 13, 15, 16, 20, 22, 24, 28, 30],
     description:
       "42-circuit Square D QO load center. Carries most of the lighting and receptacle branch circuits for bedrooms, baths, and the basement, plus the cooktop, furnaces, and a second A/C.",
     circuits: [
@@ -34,7 +35,7 @@ const PANELS = {
       { slot: 19, side: "left", poles: 1, amps: 15, label: "Basement Full / Family Lights", type: "df", notes: "" },
       { slot: 21, side: "left", poles: 2, amps: 90, label: "A/C", type: "standard", notes: "240V condenser — circuits 21/23." },
       { slot: 25, side: "left", poles: 2, amps: 20, label: "Surge Protector", type: "standard", notes: "Whole-panel SPD — circuits 25/27." },
-      { slot: 29, side: "left", poles: 2, amps: 25, label: "Emporia A", type: "standard", notes: "240V energy monitor — circuits 29/31." },
+      { slot: 29, side: "left", poles: 2, amps: 25, label: "Emporia Vue 3", type: "standard", notes: "240V energy monitor — circuits 29/31." },
 
       // Right column (even) — 9 × 15A DF, 3 × 15A standard, 1 × 15A DF, then 45A two-pole standard
       { slot: 2, side: "right", poles: 1, amps: 15, label: "Dishwasher", type: "df", notes: "Dedicated appliance circuit." },
@@ -59,7 +60,8 @@ const PANELS = {
     make: "Square D QO",
     mainAmps: 150,
     voltage: "120/240V split-phase",
-    location: "Right enclosure",
+    location: "Left enclosure",
+    monitored: [1, 2, 3, 4, 6, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23],
     description:
       "42-circuit Square D QO load center. Carries the major 240V loads — dryer, oven, heat pump, A/C, and the Tesla EV charger.",
     circuits: [
@@ -75,7 +77,7 @@ const PANELS = {
       { slot: 13, side: "left", poles: 2, amps: 30, label: "Dryer", type: "standard", notes: "240V — circuits 13/15." },
       { slot: 17, side: "left", poles: 2, amps: 40, label: "Oven", type: "standard", notes: "240V — circuits 17/19." },
       { slot: 21, side: "left", poles: 2, amps: 60, label: "Tesla", type: "standard", notes: "240V Tesla EV charger — circuits 21/23." },
-      { slot: 25, side: "left", poles: 2, amps: 15, label: "Emporia B", type: "standard", notes: "240V energy monitor — circuits 25/27." },
+      { slot: 25, side: "left", poles: 2, amps: 15, label: "Emporia Vue 3", type: "standard", notes: "240V energy monitor — circuits 25/27." },
 
       // Right column (even) — 5 × 20A DF, 2 × 20A standard, 35/35 standard two-pole, then 20A standard
       { slot: 2, side: "right", poles: 1, amps: 20, label: "Kitchen Outlets", type: "df", notes: "Small-appliance branch circuit." },
