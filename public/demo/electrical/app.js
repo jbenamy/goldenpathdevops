@@ -6,9 +6,6 @@ let selectedKey = null; // "PanelId:side-slot"
 
 const TYPE_NAMES = {
   standard: "Standard breaker",
-  gfci: "GFCI",
-  afci: "AFCI",
-  cafci: "CAFCI + AFCI",
   df: "Dual function (AFCI + GFCI)",
   main: "Main breaker",
   spare: "Spare / unused",
@@ -57,8 +54,8 @@ function makePanel(id, panel) {
   const meta = document.createElement("div");
   meta.className = "panel-meta";
   meta.innerHTML = `
-    <strong>${panel.name}</strong> — ${panel.make}<br/>
-    ${panel.mainAmps}A main · ${panel.voltage}`;
+    <strong>${panel.name}</strong> — ${panel.make} · ${panel.mainAmps}A main<br/>
+    ${panel.voltage}`;
   wrap.appendChild(meta);
 
   const panelBox = document.createElement("div");
@@ -71,6 +68,7 @@ function makePanel(id, panel) {
   if (main) {
     const m = document.createElement("button");
     m.className = "main-breaker";
+    m.dataset.key = circuitKey(id, main);
     if (circuitKey(id, main) === selectedKey) m.classList.add("selected");
     m.innerHTML = `<span class="amp-badge">${main.amps}A</span><span>${main.label}</span>`;
     m.addEventListener("click", () => selectCircuit(id, main));
@@ -98,6 +96,7 @@ function makePanel(id, panel) {
 function makeBreaker(panelId, c) {
   const b = document.createElement("button");
   b.className = `breaker t-${c.type}` + (c.poles === 2 ? " double" : "");
+  b.dataset.key = circuitKey(panelId, c);
   if (circuitKey(panelId, c) === selectedKey) b.classList.add("selected");
   const ampBadge = c.amps != null ? `<span class="amp-badge">${c.amps}A</span>` : "";
   const slotMarkup =
@@ -111,8 +110,11 @@ function makeBreaker(panelId, c) {
 }
 
 function selectCircuit(panelId, c) {
+  const prev = wallEl.querySelector(".selected");
+  if (prev) prev.classList.remove("selected");
   selectedKey = circuitKey(panelId, c);
-  renderWall();
+  const next = wallEl.querySelector(`[data-key="${selectedKey}"]`);
+  if (next) next.classList.add("selected");
   renderDetail(panelId, c);
 }
 
