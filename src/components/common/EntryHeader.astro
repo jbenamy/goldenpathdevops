@@ -1,0 +1,156 @@
+---
+import { formatDate } from "@lib/formatDate";
+import readingTime from "@lib/readingTime";
+import {
+  lowerHumanize,
+  upperHumanize,
+  markdownify,
+  slugify,
+} from "@lib/textConverter";
+
+import { Image } from "astro:assets";
+import {
+  FaRegCalendarAlt,
+  FaRegFolder,
+  FaRegUserCircle,
+  FaHashtag,
+  FaRegClock,
+} from "react-icons/fa";
+import type { GenericEntry, EntryReference } from "@/types";
+
+interface EntryData {
+  title: string;
+  image?: string;
+  imageAlt?: string;
+  author?: string;
+  date?: string;
+  pubDate?: string;
+  modDate?: string;
+  categories?: string[];
+  tags?: string[];
+  complexity?: number;
+}
+
+interface Props {
+  entry: GenericEntry;
+  showInfo?: boolean;
+  showImage?: boolean;
+  showTitle?: boolean;
+  showAuthor?: boolean;
+  showDate?: boolean;
+  showPubDate?: boolean;
+  showModDate?: boolean;
+  showReadingTime?: boolean;
+  showCategories?: boolean;
+  showTags?: boolean;
+}
+
+const {
+  entry,
+  showInfo = true,
+  showImage = false,
+  showAuthor = false,
+  showDate = false,
+  showPubDate = false,
+  showModDate = false,
+  showReadingTime = false,
+  showCategories = false,
+  showTags = false,
+}: Props = Astro.props;
+
+const {
+  title,
+  author,
+  categories,
+  tags,
+  image,
+  imageAlt,
+  date,
+  pubDate,
+  modDate,
+  complexity,
+} = entry.data as EntryData;
+
+categories?.sort((a: string, b: string) => a.localeCompare(b));
+tags?.sort((a: string, b: string) => a.localeCompare(b));
+---
+
+<div class="mt-2">
+  {
+    showInfo && (
+      <div class="glass mb-8 p-4 rounded-lg intersect:animate-fade opacity-0 intersect-no-queue">
+        <div class="flex flex-col md:flex-row gap-6 items-start">
+          <div class="flex-1">
+            <h1 set:html={markdownify(title)} class="mb-6" />
+            <div class="flex flex-wrap gap-4 text-sm text-txt-s dark:text-darkmode-txt-s">
+          {author && showAuthor && (
+            <div class="flex items-center gap-1.5">
+              <FaRegUserCircle className="text-base" />
+              <span>{upperHumanize(author)}</span>
+            </div>
+          )}
+          {date && showDate && (
+            <div class="flex items-center gap-1.5">
+              <FaRegCalendarAlt className="text-base" />
+              <span>{formatDate(date)}</span>
+            </div>
+          )}
+          {pubDate && showPubDate && (
+            <div class="flex items-center gap-1.5">
+              <FaRegCalendarAlt className="text-base" />
+              <span>Published {formatDate(pubDate)}</span>
+            </div>
+          )}
+          {modDate && showModDate && (
+            <div class="flex items-center gap-1.5">
+              <FaRegCalendarAlt className="text-base" />
+              <span>Updated {formatDate(modDate)}</span>
+            </div>
+          )}
+          {complexity && complexity > 0 && showReadingTime && (
+            <div class="flex items-center gap-1.5">
+              <FaRegClock className="text-base" />
+              <span>{readingTime(entry.body!, complexity)}</span>
+            </div>
+          )}
+          {categories && showCategories && (
+            <div class="flex items-center gap-2 flex-wrap">
+              {categories.map((category: string, index: number) => (
+                <a href={`/blog/categories/${slugify(category)}`} class="flex items-center gap-1.5 hover:text-txt-p dark:hover:text-darkmode-txt-p">
+                  <FaRegFolder className="text-base" />
+                  <span>{upperHumanize(category)}</span>
+                </a>
+              ))}
+            </div>
+          )}
+          {tags && showTags && (
+            <div class="flex items-center gap-2 flex-wrap">
+              {tags.map((tag: string, index: number) => (
+                <a href={`/blog/tags/${slugify(tag)}`} class="flex items-center gap-1.5 hover:text-txt-p dark:hover:text-darkmode-txt-p">
+                  <FaHashtag className="text-base" />
+                  <span>{lowerHumanize(tag)}</span>
+                </a>
+              ))}
+            </div>
+          )}
+            </div>
+          </div>
+          {
+            image && showImage && (
+              <div class="md:w-80 w-full shrink-0">
+                <Image
+                  class="w-full rounded-lg"
+                  src={image}
+                  alt={imageAlt || ""}
+                  height={400}
+                  width={800}
+                  loading="eager"
+                />
+              </div>
+            )
+          }
+        </div>
+      </div>
+    )
+  }
+</div>

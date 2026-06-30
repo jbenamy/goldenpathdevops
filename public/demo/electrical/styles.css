@@ -1,0 +1,466 @@
+:root {
+  --bg: #0f1115;
+  --panel-metal: #2b2f36;
+  --panel-metal-edge: #3a3f47;
+  --bus: #1a1d22;
+  --breaker: #20242b;
+  --breaker-edge: #34394300;
+  --text: #e8eaed;
+  --muted: #9aa0a8;
+  --accent: #4ea1ff;
+  --t-standard: #6b7280;
+  --t-gfci: #eab308;
+  --t-afci: #22c55e;
+  --t-cafci: #f3f4f6;
+  --t-df: #a855f7;
+  --t-main: #dc2626;
+  --t-spare: #3f4651;
+  --t-tie: #7c3aed;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.topbar {
+  padding: 20px 24px 4px;
+}
+.topbar h1 { margin: 0; font-size: 1.5rem; }
+.subtitle { margin: 4px 0 0; color: var(--muted); font-size: 0.9rem; }
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(280px, 340px);
+  gap: 24px;
+  padding: 20px 24px 40px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+}
+
+/* The wall: both panels side by side, in physical order */
+.panels-wall {
+  display: flex;
+  gap: 28px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+.panel-unit {
+  flex: 1 1 0;
+  min-width: 360px;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.panel-meta strong { color: var(--text); }
+
+/* The metal enclosure */
+.panel {
+  background: linear-gradient(160deg, var(--panel-metal), #232730);
+  border: 2px solid var(--panel-metal-edge);
+  border-radius: 10px;
+  padding: 18px 16px 22px;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.5), 0 8px 24px rgba(0,0,0,0.4);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-breaker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--breaker);
+  color: var(--text);
+  border: 1px solid var(--t-main);
+  border-left: 4px solid var(--t-main);
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.15s;
+}
+.main-breaker:hover { box-shadow: 0 0 0 2px var(--accent); }
+.main-breaker.selected { box-shadow: 0 0 0 2px var(--accent); background: #283040; }
+.main-breaker .amp-badge {
+  background: var(--t-main);
+  color: #fff;
+  border-color: #b91c1c;
+}
+
+/* Service feed rails (L1 / L2) */
+.panel-feed-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 14px;
+  margin-bottom: 0;
+}
+
+.panel-feed {
+  background: #0c1f0f;
+  border: 1px solid rgba(22, 163, 74, 0.5);
+  border-radius: 6px;
+  padding: 7px 10px;
+  box-shadow: 0 0 8px rgba(22, 163, 74, 0.1);
+}
+
+.panel-feed-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.panel-feed-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.05em;
+}
+
+.panel-feed-voltage {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #22c55e;
+  font-variant-numeric: tabular-nums;
+}
+
+.panel-feed-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel-feed-monitored {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.68rem;
+  color: #22c55e;
+  font-weight: 500;
+}
+
+.panel-feed-arrow {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.65rem;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.panel-feed-connector {
+  height: 10px;
+  background: linear-gradient(to bottom, #0c1f0f, var(--bus));
+  margin: 0 0;
+}
+
+.bus {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 14px;
+  background: var(--bus);
+  padding: 12px;
+  border-radius: 6px;
+  position: relative;
+  flex: 1;
+  align-content: start;
+}
+/* center mounting channel — a subtle recessed groove the breakers clip toward */
+.bus::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  bottom: 12px;
+  width: 10px;
+  transform: translateX(-50%);
+  background: #14171c;
+  border-radius: 3px;
+  box-shadow: inset 1px 0 1px rgba(0,0,0,0.6), inset -1px 0 1px rgba(0,0,0,0.6),
+              0 0 0 1px rgba(255,255,255,0.03);
+  z-index: 0;
+}
+.bus .column { z-index: 1; }
+
+.column { display: flex; flex-direction: column; gap: 6px; }
+
+.breaker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--breaker);
+  border: 1px solid #3a3f47;
+  border-left-width: 4px;
+  border-radius: 4px;
+  padding: 7px 9px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text);
+  font-size: 0.8rem;
+  transition: transform 0.08s, box-shadow 0.15s, background 0.15s;
+  min-height: 38px;
+}
+.breaker:hover { background: #262b33; transform: translateX(1px); }
+.breaker.selected { box-shadow: 0 0 0 2px var(--accent); background: #283040; }
+.column.right .breaker { flex-direction: row-reverse; text-align: right; border-left-width:1px; border-left-color: #3a3f47; border-right-width: 4px; }
+
+.breaker.double { min-height: 76px; }
+
+.breaker.t-standard { border-left-color: var(--t-standard); }
+.column.right .breaker.t-standard { border-right-color: var(--t-standard); }
+.breaker.t-gfci { border-left-color: var(--t-gfci); }
+.column.right .breaker.t-gfci { border-right-color: var(--t-gfci); }
+.breaker.t-afci { border-left-color: var(--t-afci); }
+.column.right .breaker.t-afci { border-right-color: var(--t-afci); }
+.breaker.t-cafci { border-left-color: var(--t-cafci); }
+.column.right .breaker.t-cafci { border-right-color: var(--t-cafci); }
+.breaker.t-df { border-left-color: var(--t-df); }
+.column.right .breaker.t-df { border-right-color: var(--t-df); }
+.breaker.t-spare { border-left-color: var(--t-spare); opacity: 0.6; }
+.column.right .breaker.t-spare { border-right-color: var(--t-spare); }
+
+/* open (unused) bus positions */
+/* Emporia-monitored circuits */
+.breaker.monitored {
+  background: #0c1f0f;
+  box-shadow: 0 0 0 1px rgba(22, 163, 74, 0.5), 0 0 8px rgba(22, 163, 74, 0.12);
+}
+.breaker.monitored:hover {
+  background: #122518;
+}
+.breaker.monitored.selected {
+  box-shadow: 0 0 0 2px var(--accent), 0 0 8px rgba(22, 163, 74, 0.12);
+}
+
+.breaker.t-open {
+  background: #16191e;
+  border: 1px dashed #3a3f47;
+  color: var(--muted);
+  opacity: 0.7;
+}
+.breaker.t-open:hover { opacity: 1; background: #1c2026; }
+.breaker.t-open .breaker-label {
+  font-style: italic;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.amp-badge {
+  flex: none;
+  background: #11131799;
+  border: 1px solid #4a505a;
+  border-radius: 3px;
+  padding: 2px 5px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.breaker-label {
+  flex: 1;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.2;
+}
+.slot-num {
+  flex: none;
+  color: var(--muted);
+  font-size: 0.65rem;
+  font-variant-numeric: tabular-nums;
+  min-width: 16px;
+}
+/* 2-pole: show both slot numbers stacked at the top and bottom, as if two slots */
+.breaker.double .slot-num {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Emporia Vue Gen 3 device box */
+.emporia-connector {
+  width: 3px;
+  height: 18px;
+  background: linear-gradient(to bottom, #3a3f47, #16a34a66);
+  margin: 0 auto;
+}
+
+.emporia-device {
+  background: linear-gradient(160deg, #0d2618, #071a10);
+  border: 1px solid #16a34a;
+  border-radius: 8px;
+  padding: 12px 16px;
+  box-shadow: 0 0 12px rgba(22, 163, 74, 0.15), 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.emporia-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.emporia-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.emporia-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  color: #22c55e;
+  font-weight: 500;
+}
+.emporia-status svg {
+  flex: none;
+}
+
+.emporia-info {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.emporia-feeds {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #16a34a33;
+}
+
+.emporia-feed {
+  flex: 1;
+  background: #0c1f0f;
+  border: 1px solid rgba(22, 163, 74, 0.45);
+  border-radius: 6px;
+  padding: 7px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 0 6px rgba(22, 163, 74, 0.08);
+}
+
+.emporia-feed-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.04em;
+}
+
+.emporia-feed-status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  color: #22c55e;
+  font-weight: 500;
+}
+
+.emporia-channels {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #16a34a33;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.emporia-channel-count {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #22c55e;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.legend-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 14px 24px 28px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  border-top: 1px solid var(--panel-metal-edge);
+}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.swatch { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.swatch.t-standard { background: var(--t-standard); }
+.swatch.t-gfci { background: var(--t-gfci); }
+.swatch.t-afci { background: var(--t-afci); }
+.swatch.t-cafci { background: var(--t-cafci); }
+.swatch.t-df { background: var(--t-df); }
+.swatch.t-main { background: var(--t-main); }
+.swatch.t-spare { background: var(--t-spare); }
+.swatch.t-open { background: #16191e; border: 1px dashed #3a3f47; }
+
+/* Detail pane */
+.detail {
+  background: var(--panel-metal);
+  border: 1px solid var(--panel-metal-edge);
+  border-radius: 10px;
+  padding: 20px 22px;
+  position: sticky;
+  top: 20px;
+  min-height: 200px;
+}
+.detail-empty { color: var(--muted); }
+.detail h2 { margin: 0 0 4px; font-size: 1.2rem; }
+.detail .type-pill {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: #fff;
+  margin-bottom: 14px;
+}
+.dt-standard { background: var(--t-standard); }
+.dt-gfci { background: var(--t-gfci); color: #111; }
+.dt-afci { background: var(--t-afci); }
+.dt-cafci { background: var(--t-cafci); color: #111; }
+.dt-df { background: var(--t-df); }
+.dt-main { background: var(--t-main); }
+.dt-spare { background: var(--t-spare); }
+.dt-open { background: #4b5563; }
+
+.detail-panel-tag {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin: 0 0 14px;
+}
+.detail dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; margin: 0; }
+.detail dt { color: var(--muted); font-size: 0.85rem; }
+.detail dd { margin: 0; font-size: 0.92rem; }
+.detail .notes {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--panel-metal-edge);
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}

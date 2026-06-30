@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Disallow: /api/*
+
+Sitemap: https://goldenpathdevops.io/sitemap-index.xml
